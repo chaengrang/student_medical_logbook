@@ -9,12 +9,12 @@
 char user[100][100] = {"hanni", "rei"}, pass[100][100] = {"hanni", "rei"};
 
 char name[100], yr_sec[25], st_num[25];
-// NOTE: add sample entry, update userCount.
+// NOTE: add sample entry.
 char blood_type[25], allergies[25], med_history[25],
 med_condition[25], medcation_status[25], sugery_status[25];
 // TODO: suggest for optimisation
 int age;
-int menu_status = 0, adminCount = 1, userCount, edit_index = 0, admin_index = 0;
+int menu_status = 0, adminCount = 1, admin_index = 0;
 char current_user[50];
 
 void menu();
@@ -29,12 +29,13 @@ void all_user();
 
 
 void main(){
-		menu();
+		do{
+			menu();
+		} while (menu_status == 1);
 	getch();
 }
 // NOTE: final layout?
 void menu(){
-	fail:
 	clrscr();
 	int op;
 	cout << "Student Medical Logbook" << endl;
@@ -58,7 +59,7 @@ void menu(){
 	exit(0);
 	break;
 	default:
-	cout << "Input Error!" << op; // NOTE: op = status checking
+	cout << "Input Error! (" << op << ")"; // NOTE: op = status checking
 	getch();
 	menu_status = 1;
 	break;
@@ -108,31 +109,6 @@ if (!checkStudent){
 	 }
 
 }
-// NOTE: no function, just for referrence
-// START REFERRENCE
-void login(){
-char login_user[20], login_pass[20];
-int login_check = 1;
-cout << "Enter Username:\n >";
-cin >> login_user;
-cout << "Enter Password:\n >";
-cin >> login_pass;
-	for (int i = 0; i <= userCount; i++){
-		if(strcmp(pass[i], login_pass) == 0 && strcmp(user[i], login_user) == 0){
-			login_check = 0;
-		}
-	}
-		if (login_check == 0){
-			cout << "Login Success!";
-			getch();
-		} else {
-			cout << "Login Failed!";
-			getch();
-			menu();
-		}
-
-}
-// END REFERRENCE
 // NOTE: survey info correct? -> commit changes
 void med_survey(){
 	clrscr();
@@ -148,7 +124,7 @@ void med_survey(){
 	cout << "What are your Medical Conditions? (if any): \n";
 	gets(med_condition);
 	cout << "Medical Profile Survey Finished!";
-	userCount++;
+	
 	// start fstream input
 	ofstream writeData(current_user);
 	writeData << "Student Info" << endl;
